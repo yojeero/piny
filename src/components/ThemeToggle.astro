@@ -1,0 +1,66 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<button
+  id="theme-toggle"
+  type="button"
+  aria-label="Toggle Theme"
+  aria-pressed="false"
+  class="inline-flex items-center cursor-pointer pr-2"
+>
+  <Icon
+    name="sun"
+    class="h-5 w-5 text-foreground hover:text-rose-500 dark:text-blue-600 outline-none"
+  />
+</button>
+
+<script>
+const THEME_STORAGE_KEY = "theme";
+const THEME_COLORS = { light: "#f0ece3", dark: "#1c2644" } as const;
+
+const getThemeState = () => document.documentElement.classList.contains("dark");
+
+function syncThemeElements() {
+  const isDark = getThemeState();
+
+  const button = document.getElementById("theme-toggle");
+  if (button) {
+    button.setAttribute("aria-pressed", String(isDark));
+  }
+
+  const color = isDark ? THEME_COLORS.dark : THEME_COLORS.light;
+  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+    meta.setAttribute("content", color);
+  }
+}
+
+function setupTheme() {
+  syncThemeElements();
+
+  const button = document.getElementById("theme-toggle");
+  if (button) {
+    button.removeEventListener("click", toggleTheme);
+    button.addEventListener("click", toggleTheme);
+  }
+}
+
+function toggleTheme() {
+  const isDark = getThemeState();
+  const newTheme = isDark ? "light" : "dark";
+
+  document.documentElement.classList.toggle("dark", newTheme === "dark");
+  localStorage.setItem(THEME_STORAGE_KEY, newTheme);
+  syncThemeElements();
+}
+
+document.addEventListener("astro:page-load", setupTheme);
+
+window
+  .matchMedia("(prefers-color-scheme: dark)")
+  .addEventListener("change", (e) => {
+    if (localStorage.getItem(THEME_STORAGE_KEY)) return;
+    document.documentElement.classList.toggle("dark", e.matches);
+    syncThemeElements();
+  });
+</script>
