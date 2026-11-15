@@ -1,0 +1,1482 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/"><channel><title>PINUQ</title><description>Tech Blog</description><link>https://pinuq.vercel.app/</link><language>en-us</language><item><title>Github fast</title><link>https://pinuq.vercel.app/blog/git-fast/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/git-fast/</guid><description>Main git commands.</description><pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;git clone&lt;br /&gt;
+git commit -m &quot;update&quot;&lt;br /&gt;
+git add&lt;br /&gt;
+git branch&lt;br /&gt;
+git checkout&lt;br /&gt;
+git push&lt;br /&gt;
+git rebase&lt;br /&gt;
+git revert&lt;/p&gt;
+&lt;p&gt;git status&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;git config --global user.email &quot;yojeero@gmail.com&quot;&lt;br /&gt;
+git config --global user.name &quot;yojeero&quot;&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;git init&lt;br /&gt;
+git add .&lt;br /&gt;
+git push&lt;/p&gt;
+&lt;h3&gt;github cli&lt;/h3&gt;
+&lt;p&gt;gh repo create home_linux --public -d &apos;linux config dots, icons, themes, wallpapers, media-test in home directory&apos;&lt;br /&gt;
+git remote add origin https://github.com/yojeero/home_linux.git&lt;br /&gt;
+git branch -M main&lt;br /&gt;
+git push -u origin main&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;git remote add origin https://github.com/yojeero/config_linux.git&lt;br /&gt;
+git config --global --add safe.directory D:/Yojee/Soft/USB/Doc/Linux/HOME&lt;/p&gt;
+</content:encoded><category>Git</category></item><item><title>Git Gitignore</title><link>https://pinuq.vercel.app/blog/git-gitignore/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/git-gitignore/</guid><description>gitignore and how to use it</description><pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;.gitignore&lt;br /&gt;
+&amp;gt; needed to hide files and folders from the Git version control system. Typically, configuration files (especially those with passwords), temporary files and folders are hidden.&lt;/p&gt;
+&lt;p&gt;Base:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each line is a separate template.&lt;/li&gt;
+&lt;li&gt;Empty lines are ignored.&lt;/li&gt;
+&lt;li&gt;Lines starting with # are comments.&lt;/li&gt;
+&lt;li&gt;The slash character &quot;/&quot; at the beginning of the line indicates the current folder (where .gitignore is located).&lt;/li&gt;
+&lt;li&gt;The asterisk(*) replaces any number of characters.&lt;/li&gt;
+&lt;li&gt;Two asterisks (**) are used to indicate all subfolders.&lt;/li&gt;
+&lt;li&gt;An exclamation mark(!) at the beginning of a line inverts the pattern (used for exceptions).&lt;/li&gt;
+&lt;li&gt;To escape special characters, use the backslash &quot;&quot;. To ignore an entire directory, the rule must end with a slash (/), otherwise the rule is treated as a file name.&lt;/li&gt;
+&lt;li&gt;The gitignore repository from github contains examples of gitignore files for all typical projects.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Example .gitignore file&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Ignore foo.txt file.
+foo.txt
+
+# Ignore html files
+*.html   
+
+# But specifically foo.html should not be ignored
+!foo.html   
+
+# Ignore rar files in the project root
+# Let&apos;s say the file /temp/main.rar will not be ignored because he&apos;s not at the root
+/*.rar   
+
+# Ignore css files from the bar folder not including subfolders
+# Let&apos;s say the file /bar/temp/main.css will not be ignored because it&apos;s in the temp subfolder
+/bar/*.css   
+
+# Ignore js files from the bar folder and subfolders, if any
+/bar/**.*.js
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;h3&gt;How can I exclude a folder from tracking but add a subfolder?&lt;/h3&gt;
+&lt;p&gt;Problem 1&lt;/p&gt;
+&lt;p&gt;Remove the node_modules folder, but leave 2 subfolders jquery and semantic in it&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;├── js
+│ ├── app.js
+│ └── system.js
+├── scss
+│ ├── system.scss
+│ └── theme.scss
+└── vendor
+    ├── node_modules ← Убрать
+    │ ├── load-json-file
+    │ ├── lodash
+    │ ├── jquery ← Оставить
+    │ ├── make-error
+    │ ├── semantic ← Оставить
+    │ └── yargs
+    └── semantic.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Solution:&lt;/p&gt;
+&lt;p&gt;/vendor/node_modules/*&lt;br /&gt;
+!/vendor/node_modules/jquery/&lt;br /&gt;
+!/vendor/node_modules/semantic/&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;Problem 2&lt;/p&gt;
+&lt;p&gt;Remove the node_modules folder, but leave the dist subfolder in its jquery subfolder.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;├── js
+│ ├── app.js
+│ └── system.js
+├── scss
+│ ├── system.scss
+│ └── theme.scss
+└── vendor
+    ├── node_modules ← Убрать
+    │ ├── load-json-file
+    │ ├── lodash
+    │ ├── jquery
+    │ │ └──dist ← Оставить
+    │ ├── make-error
+    │ ├── semantic
+    │ └── yargs
+    └── semantic.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Solution:&lt;/p&gt;
+&lt;p&gt;/vendor/node_modules/*&lt;br /&gt;
+/vendor/node_modules/jquery/*&lt;br /&gt;
+!/vendor/node_modules/jquery/&lt;br /&gt;
+!/vendor/node_modules/jquery/dist/&lt;/p&gt;
+</content:encoded><category>Git</category></item><item><title>Pen on paper</title><link>https://pinuq.vercel.app/blog/pen-paper/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/pen-paper/</guid><description>Preserving important records on paper.</description><pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Save important notes on paper&lt;/h2&gt;
+&lt;p&gt;For long-term preservation of notes on paper, it is best to use ballpoint pens.&lt;/p&gt;
+&lt;h2&gt;Why ballpoint pens are the best for archiving&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Water resistance: Oil-based ink will not smear when wet.&lt;/li&gt;
+&lt;li&gt;Light fastness: the paste does not fade from sunlight for decades.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Paper durability: Ink will not corrode paper fibers over time.&lt;/h4&gt;
+&lt;p&gt;-Chemical stability: pigments are resistant to oxidation.&lt;/p&gt;
+&lt;h3&gt;Disadvantages of gel and capillary pens&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Vulnerable to Moisture: Most gel and capillary inks will wash away instantly from water.&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fading: capillary pens (liners) quickly fade in the light.&lt;/li&gt;
+&lt;li&gt;Bleed-through: Ink from capillary pens often bleeds through the paper.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Exception to the rule&lt;/h2&gt;
+&lt;p&gt;If you absolutely don&apos;t like ballpoint pens, look for gel or capillary pens labeled &quot;Archival-safe&quot;, &quot;Document&quot; or ISO 14145-2 compliant. They contain special pigment ink that is not afraid of water and light.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;p&gt;For a home notepad away from the sun, the best choice would be gel pens with pigment ink or classic ballpoint pens.&lt;/p&gt;
+&lt;p&gt;In such conditions, the main threat is accidental moisture (for example, spilled tea) and the natural aging of paper.&lt;/p&gt;
+&lt;h2&gt;Best options for home recordings&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Pigment gel: Ideal choice. Pigment-based inks (as opposed to conventional water-soluble dyes) are firmly etched into the paper. They will not flow from a drop of water and write softer than ballpoint ones.&lt;/li&gt;
+&lt;li&gt;Butter ball: Traditional and safest option. The text will not blur, even if the notepad is completely flooded with water.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;What is better to refuse&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Conventional capillary pens (liners): If the air humidity in the room is high, the ink may begin to blur, and a drop of water may cause the text to disappear completely.&lt;/li&gt;
+&lt;li&gt;Cheap gel pens: Blue and black colors in inexpensive sets are often water-based - they smear easily.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Proven series of archive pens&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Uni-ball Signo (DX or Broad series): Contains Super Ink pigment ink. Protected from water and time.&lt;/li&gt;
+&lt;li&gt;Pilot G-2: A popular gel, but be warned - it has only average water resistance, although it has a long shelf life.&lt;/li&gt;
+&lt;li&gt;Pentel EnerGel: Writes great and dries quickly, but is afraid of water. Use only in dry environments.&lt;/li&gt;
+&lt;li&gt;Pigment liners (Pigma Micron, Staedtler Pigment Liner): These are capillary pens, but with special archival inks. They won&apos;t flow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr /&gt;
+&lt;p&gt;For a thin, neat line and light blue color in a home notebook, Japanese gel pens with an ultra-thin point (0.38 mm - 0.5 mm) and pigment ink are best suited. Regular roll-on blue is often too dark or muddy, but gel will give a clean, bright shade.&lt;/p&gt;
+&lt;h2&gt;The best pens for your criteria&lt;/h2&gt;
+&lt;h4&gt;Uni-ball Signo DX (UM-151), thickness 0.38 mm&lt;/h4&gt;
+&lt;h4&gt;Color: Light Blue or Sky Blue.&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Pros&lt;/strong&gt;: An absolute favorite for archival recordings. Uni Super Ink pigment ink is firmly embedded into the paper, is not afraid of water and does not fade. The line turns out to be jewelry thin and clear.&lt;/p&gt;
+&lt;h4&gt;Pilot Juice / Juice Up, thickness 0.38 mm or 0.4 mm&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Color&lt;/strong&gt;: Light Blue.&lt;br /&gt;
+&lt;strong&gt;Pros&lt;/strong&gt;: The Juice Up version has a unique synergistic nib that writes incredibly smooth for its thickness. The ink is pigmented, moisture resistant, the colors are very rich and aesthetic.&lt;/p&gt;
+&lt;h4&gt;Zebra Sarasa Clip, thickness 0.4 mm or 0.5 mm&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Color&lt;/strong&gt;: Pale Blue or Light Blue.&lt;br /&gt;
+&lt;strong&gt;Pros&lt;/strong&gt;: Archival quality pigment gel. Convenient clip-on clip. It writes softly, the line is not interrupted, and dries faster than many analogues.&lt;/p&gt;
+&lt;h2&gt;What to look for when buying&lt;/h2&gt;
+&lt;p&gt;Look for Japanese versions on marketplaces or stationery stores. The name or description must indicate 0.38 mm (or 0.4 mm) - this will ensure that very thin and neat line that will not blur on the notepad paper.&lt;/p&gt;
+</content:encoded><category>Style</category></item><item><title>USB via Qemu</title><link>https://pinuq.vercel.app/blog/usb-qemu/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/usb-qemu/</guid><description>Run multiboot USB via QEMU.</description><pubDate>Thu, 01 Oct 2026 00:00:00 GMT</pubDate><content:encoded>&lt;h1&gt;The easiest way to run multiboot USB via QEMU on Windows&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;Download QEMU for Windows regular installer.&lt;/li&gt;
+&lt;li&gt;Find out the flash drive number&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;PowerShell from administrator:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Get-CimInstance Win32_DiskDrive
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Look for your USB flash drive.&lt;/p&gt;
+&lt;p&gt;For example:  \.\PHYSICALDRIVE2&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Launch the flash drive&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Open PowerShell as administrator:&lt;/p&gt;
+&lt;p&gt;cd &quot;C:\Program Files\qemu&quot;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;.\qemu-system-x86_64.exe -m 4096 -boot c -hda \\.\PHYSICALDRIVE2
+&lt;/code&gt;&lt;/pre&gt;
+</content:encoded><category>Tech</category></item><item><title>Mango Astro</title><link>https://pinuq.vercel.app/blog/mango-astro/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/mango-astro/</guid><description>Mango dotfiles for the Arch Linux. Used Osaka-Dark-Solarized theme and Gruvbox icons. Astro wallpaper with orange and green contrast.</description><pubDate>Fri, 11 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./1.webp&apos;;
+import image2 from &apos;./2.webp&apos;;&lt;br /&gt;
+import image3 from &apos;./3.webp&apos;;
+import image4 from &apos;./4.webp&apos;;&lt;/p&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;mango-astro&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;mango-astro&quot; /&amp;gt;
+&amp;lt;Image src={image3} alt=&quot;mango-astro&quot; /&amp;gt;
+&amp;lt;Image src={image4} alt=&quot;mango-astro&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h4&gt;Main&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Window Manager: mango&lt;/li&gt;
+&lt;li&gt;Status bar: wayybar&lt;/li&gt;
+&lt;li&gt;Terminal: foot&lt;/li&gt;
+&lt;li&gt;Launcher: fuzzel&lt;/li&gt;
+&lt;li&gt;Wallpaper: swaybg&lt;/li&gt;
+&lt;li&gt;Compositor: wayland&lt;/li&gt;
+&lt;li&gt;Screenshot: grim&lt;/li&gt;
+&lt;li&gt;Viewer: imv&lt;/li&gt;
+&lt;li&gt;Logout menu: wlogout&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Fonts&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Symbols Nerd Font&lt;/strong&gt; - icons, interface, development.&lt;br /&gt;
+&lt;strong&gt;JetBrains Mono&lt;/strong&gt; - system font and interface.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear Sans 10&lt;/strong&gt; - System Font&lt;br /&gt;
+&lt;strong&gt;Osaka-Dark-Solarized&lt;/strong&gt; - Theme&lt;br /&gt;
+&lt;strong&gt;Gruvbox&lt;/strong&gt; - Icons&lt;/p&gt;
+&lt;h3&gt;🧼 Installation&lt;/h3&gt;
+&lt;h4&gt;1. Boot to the Arch iso&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;archinstall
+
+on the step - profile - select &amp;gt; desktop &amp;gt; sway
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2. After installing - Reboot and update system&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+
+sudo pacman -S \
+      xorg-xwayland \
+      seatd \
+      polkit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+sudo systemctl enable --now seatd
+sudo usermod -aG seat $USER&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;3. Installing Mango&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+paru -Syu \
+mangowm-git \      
+      waybar-git \
+      swaybg \
+      swaylock-effects-git \
+      swaync \
+      sway-audio-idle-inhibit-git \
+      swayidle \
+      wlogout \
+      foot \
+      xdg-desktop-portal-wlr \
+      wl-clip-persist \
+      cliphist \
+      wl-clipboard \
+      wlsunset \
+      xfce-polkit \
+      pamixer \
+      wlr-dpms \
+      dimland-git \
+      brightnessctl \
+      swayosd \
+      wlr-randr \
+      grim \
+      slurp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;4. Installing Pkgs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;paru -S \
+
+alacritty \
+   foot \
+   micro \
+   mousepad \
+   firefox
+
+thunar \
+   thunar-archive-plugin \
+   thunar-volman \
+   xfce4-screenshooter
+
+fastfetch \
+   mc \
+   xarchiver \
+   tumbler \
+   btop
+
+p7zip \
+   unzip \
+   zip \
+   tar \
+   atool
+
+wget \
+   git \
+   curl \
+   gvfs \
+   udisks2 \
+   ntfs-3g
+
+xdg-utils \
+   ripgrep \
+   zoxide \
+   eza \
+   fzf \
+   fd
+
+imv \
+   celluloid \
+   rhythmbox \
+   imagemagick \
+   ffmpeg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;5. Installing FISH&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;paru -S fish 
+
+chsh -s $(command -v fish)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Home Structure&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;~/
+├── Pictures/
+├── Screen/
+├── icons/
+├── themes/
+├── .local/share/fonts/
+└── .config/
+    ├── mango/
+    ├── waybar/
+    ├── fuzzel/
+    └── foot/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Used Dots, Icons, Themes, Wallpapers&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+&lt;a href=&quot;https://github.com/yojeero/config_linux&quot;&gt;yojeero/config_linux&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Folder for screenshots&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+Create folder &lt;strong&gt;Screen&lt;/strong&gt; for saving screenshots via grim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;🐧 Login TTY&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+Mango &amp;gt; use Bash or ZSH or FISH&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;.bash_profile&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if [[ -z $DISPLAY &amp;amp;&amp;amp; $XDG_VTNR -eq 1 ]]; then
+  exec mango
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;.zprofile&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if [ -z &quot;${DISPLAY}&quot; ] &amp;amp;&amp;amp; [ &quot;${XDG_VTNR}&quot; -eq 1 ]; then
+  exec mango
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if status is-login
+    if test (tty) = /dev/tty1
+
+         set -gx XDG_CURRENT_DESKTOP mango
+            set -gx XDG_SESSION_DESKTOP mango
+            set -gx XDG_SESSION_TYPE wayland
+            set -gx MOZ_ENABLE_WAYLAND 1
+            set -gx QT_QPA_PLATFORM wayland
+            
+            exec mango
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login Mango&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Arch Linux &amp;gt; login &amp;gt; pass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Mango + Sway&lt;/h3&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Interactive session selection when logging into TTY1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if status is-interactive; and test (tty) = &quot;/dev/tty1&quot;
+    echo &quot;===================================&quot;
+    echo &quot; Run Mango or Sway:   &quot;
+    echo &quot; [1] Mango (Wayland)              &quot;
+    echo &quot; [2] Sway (Wayland)              &quot;
+    echo &quot; [3] Stay in TTY      &quot;
+    echo &quot;===================================&quot;
+    
+    # Read the user&apos;s choice
+    read -P &quot;Select [1-3]: &quot; choice
+
+    switch $choice
+        case 1
+            echo &quot;Start Mango (Wayland)...&quot;    
+            set -gx XDG_CURRENT_DESKTOP mango
+            set -gx XDG_SESSION_DESKTOP mango
+            set -gx XDG_SESSION_TYPE wayland
+            set -gx MOZ_ENABLE_WAYLAND 1
+            set -gx QT_QPA_PLATFORM wayland
+            
+            exec mango
+
+        case 2
+            echo &quot;Start Sway (Wayland)...&quot;
+            set -gx XDG_CURRENT_DESKTOP sway
+            set -gx XDG_SESSION_DESKTOP sway
+            set -gx XDG_SESSION_TYPE wayland
+            set -gx MOZ_ENABLE_WAYLAND 1
+            set -gx QT_QPA_PLATFORM wayland
+            
+            exec sway
+
+        case 3
+            echo &quot;Enter to TTY!&quot;
+            
+        case &apos;*&apos;
+            echo &quot;Bad step. Stay in TTY.&quot;
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login Mango or Sway&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;├── [1] Mango (Wayland)   
+├── [2] Sway (Wayland)   
+└── [3] Stay in TTY   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/mango_astro&quot;&gt;Mango Astro&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Linux</category></item><item><title>Sway Latte</title><link>https://pinuq.vercel.app/blog/sway-latte/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/sway-latte/</guid><description>Sway dotfiles for the Arch Linux. Usedd Zorin light theme and Gruvbox icons. The best theme for evere day in the light style.</description><pubDate>Fri, 04 Sep 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./1.webp&apos;;
+import image2 from &apos;./2.webp&apos;;&lt;/p&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;sway-latte&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;sway-latte&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h4&gt;Main&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Window Manager: sway&lt;/li&gt;
+&lt;li&gt;Status bar: wayybar&lt;/li&gt;
+&lt;li&gt;Terminal: foot&lt;/li&gt;
+&lt;li&gt;Launcher: fuzzel&lt;/li&gt;
+&lt;li&gt;Wallpaper: swaybg&lt;/li&gt;
+&lt;li&gt;Compositor: wayland&lt;/li&gt;
+&lt;li&gt;Screenshot: grim&lt;/li&gt;
+&lt;li&gt;Viewer: imv&lt;/li&gt;
+&lt;li&gt;Logout menu: wlogout&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Waybar is visible &amp;gt; gaps in 40 &amp;gt; normal mode&lt;br /&gt;
+Waybar is hide &amp;gt; &lt;code&gt;super + g &lt;/code&gt; &amp;gt; gaps in 0 &amp;gt; working mode&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Fonts&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Symbols Nerd Font&lt;/strong&gt; - icons, interface, development.&lt;br /&gt;
+&lt;strong&gt;JetBrains Mono&lt;/strong&gt; - system font and interface.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear Sans 10&lt;/strong&gt; - System Font&lt;br /&gt;
+&lt;strong&gt;Zorin-Light&lt;/strong&gt; - Theme&lt;br /&gt;
+&lt;strong&gt;Gruvbox&lt;/strong&gt; - Icons&lt;/p&gt;
+&lt;h3&gt;🧼 Installation&lt;/h3&gt;
+&lt;h4&gt;1. Boot to the Arch iso&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;archinstall
+
+on the step - profile - select &amp;gt; desktop &amp;gt; sway
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2. After installing - Reboot and update system&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+
+sudo pacman -S \
+      xorg-xwayland \
+      seatd \
+      polkit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+sudo systemctl enable --now seatd
+sudo usermod -aG seat $USER&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;3. Installing Sway&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+paru -S \
+sway-git \
+   wlroots-git \
+   waybar-git \
+   swaylock \
+   swayidle \
+   swaybg \
+   wl-clipboard \
+   wlogout \
+   fuzzel \
+   foot \
+   mako \
+   grim \
+   slurp \
+   xdg-desktop-portal-wlr \
+   xdg-desktop-portal-gtk \
+   nwg-look
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;4. Installing Pkgs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;paru -S \
+
+alacritty \
+   foot \
+   micro \
+   mousepad \
+   firefox
+
+thunar \
+   thunar-archive-plugin \
+   thunar-volman \
+   xfce4-terminal
+
+fastfetch \
+   mc \
+   xarchiver \
+   tumbler \
+   btop
+
+p7zip \
+   unzip \
+   zip \
+   tar \
+   atool
+
+wget \
+   git \
+   curl \
+   gvfs \
+   udisks2 \
+   ntfs-3g
+
+xdg-utils \
+   ripgrep \
+   zoxide \
+   xfce4-screenshooter
+
+imv \
+   celluloid \
+   rhythmbox \
+   imagemagick \
+   ffmpeg
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;5. Installing FISH&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;paru -S \
+fish \
+   eza \
+   fzf \
+   fd
+
+chsh -s $(command -v fish)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Home Structure&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;~/
+├── Pictures/
+├── Screen/
+├── icons/
+├── themes/
+├── .local/share/fonts/
+└── .config/
+    ├── sway/
+    ├── waybar/
+    ├── fuzzel/
+    └── foot/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Used Dots, Icons, Themes, Wallpapers&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+&lt;a href=&quot;https://github.com/yojeero/config_linux&quot;&gt;yojeero/config_linux&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Folder for screenshots&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+Create folder &lt;strong&gt;Screen&lt;/strong&gt; for saving screenshots via grim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Login TTY&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+Sway &amp;gt; use Bash or ZSH or FISH&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;.bash_profile&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if [[ -z $DISPLAY &amp;amp;&amp;amp; $XDG_VTNR -eq 1 ]]; then
+  exec sway
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;.zprofile&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if [ -z &quot;${DISPLAY}&quot; ] &amp;amp;&amp;amp; [ &quot;${XDG_VTNR}&quot; -eq 1 ]; then
+  exec sway
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;if status is-login
+    if test (tty) = /dev/tty1
+
+        set -gx XDG_CURRENT_DESKTOP sway
+        set -gx XDG_SESSION_DESKTOP sway
+        set -gx XDG_SESSION_TYPE wayland
+        set -gx MOZ_ENABLE_WAYLAND 1
+        set -gx QT_QPA_PLATFORM wayland
+
+        set -gx _JAVA_AWT_WM_NONREPARENTING 1
+
+        exec sway
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login Sway&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Arch Linux &amp;gt; login &amp;gt; pass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/sway_latte&quot;&gt;Sway Latte&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Linux</category></item><item><title>Herbstluftwm Turbo</title><link>https://pinuq.vercel.app/blog/hlwm-turbo/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/hlwm-turbo/</guid><description>Hlwm dotfiles for the Arch Linux. Used Kanagawa theme and Gruvbox icons. Very stylish theme in the dark contrast.</description><pubDate>Mon, 24 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./1.webp&apos;;
+import image2 from &apos;./2.webp&apos;;&lt;/p&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;hlwm-turbo&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;hlwm-turbo&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h4&gt;Main&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Window Manager: herbstluftwm&lt;/li&gt;
+&lt;li&gt;Status bar: polybar&lt;/li&gt;
+&lt;li&gt;Terminal: alacritty&lt;/li&gt;
+&lt;li&gt;Launcher: rofi&lt;/li&gt;
+&lt;li&gt;Wallpaper: feh&lt;/li&gt;
+&lt;li&gt;Compositor: picom&lt;/li&gt;
+&lt;li&gt;Screenshot: maim&lt;/li&gt;
+&lt;li&gt;Viewer: imv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Polybar is visible &amp;gt; gaps in 40 &amp;gt; normal mode&lt;br /&gt;
+Polybar is hide &amp;gt; &lt;code&gt;super + b &lt;/code&gt; &amp;gt; gaps in 0 &amp;gt; working mode&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Fonts&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Symbols Nerd Font&lt;/strong&gt; - icons, interface, development.&lt;br /&gt;
+&lt;strong&gt;JetBrains Mono&lt;/strong&gt; - system font and interface.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear Sans 10&lt;/strong&gt; - System Font&lt;br /&gt;
+&lt;strong&gt;Kanagawa&lt;/strong&gt; - Theme&lt;br /&gt;
+&lt;strong&gt;Gruvbox&lt;/strong&gt; - Icons&lt;/p&gt;
+&lt;h3&gt;🧼 Installation&lt;/h3&gt;
+&lt;h4&gt;1. Boot to the Arch iso&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;archinstall
+
+on the step - profile - select &amp;gt; desktop &amp;gt; minimal
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2. After installing - Reboot and update system&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+
+sudo pacman -S \
+    xorg-server \
+    xorg-xinit \
+    xorg-xrandr \
+    xorg-xset \
+    xorg-xsetroot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;3. Installing Herbstluftwm&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+herbstluftwm \
+    alacritty \
+    polybar \
+    rofi \
+    picom \
+    feh \
+    maim \
+    slop \
+    xclip \
+    dunst \
+    i3lock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+Give execution rights to configuration scripts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;chmod +x ~/.config/herbsluftwm/autostart
+chmod +x ~/.config/polybar/launch.sh
+chmod +x ~/.config/polybar/hlwm-polybar/hlwm-tags.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;4. Installing Pkgs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+
+alacritty \
+   micro \
+   mousepad \
+   firefox
+
+thunar \
+   thunar-archive-plugin \
+   thunar-volman
+
+fastfetch \
+   mc \
+   xarchiver \
+   tumbler \
+   btop
+
+p7zip \
+   unzip \
+   zip \
+   tar \
+   atool
+
+wget \
+   git \
+   curl \
+   gvfs \
+   udisks2 \
+   ntfs-3g
+
+xdg-utils \
+   ripgrep \
+   zoxide \
+   xfce4-screenshooter
+
+imv \
+   celluloid \
+   rhythmbox \
+   imagemagick \
+   ffmpeg \
+   lxappearance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;5. Installing FISH&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+fish \
+   eza \
+   fzf \
+   fd
+
+chsh -s $(command -v fish)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Home Structure&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;~/
+├── Pictures/
+├── Screen/
+├── icons/
+├── themes/
+├── .local/share/fonts/
+└── .config/
+    ├── herbstluftwm/
+    ├── polybar/
+    ├── rofi/
+    └── picom/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Used Dots, Icons, Themes, Wallpapers&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+&lt;a href=&quot;https://github.com/yojeero/config_linux&quot;&gt;yojeero/config_linux&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Folder for screenshots&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+Create folder &lt;strong&gt;Screen&lt;/strong&gt; for saving screenshots via maim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Login TTY&lt;/h3&gt;
+&lt;h3&gt;x11 wm&lt;/h3&gt;
+&lt;h4&gt;.xinitrc&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;exec herbstluftwm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if status is-login
+    if test -z &quot;$DISPLAY&quot; -a (tty) = &quot;/dev/tty1&quot;
+        exec startx
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login x11 wm&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Arch Linux &amp;gt; login &amp;gt; pass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;x11/wayland wm&lt;/h3&gt;
+&lt;h4&gt;.xinitrc&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if [ -n &quot;$1&quot; ]; then
+    exec &quot;$1&quot;
+else
+    exec herbstluftwm
+fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Interactive session selection when logging into TTY1&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if status is-interactive; and test (tty) = &quot;/dev/tty1&quot;
+    echo &quot;===================================&quot;
+    echo &quot; Run HLWM or Sway:   &quot;
+    echo &quot; [1] herbstluftwm (X11)           &quot;
+    echo &quot; [2] Sway (Wayland)              &quot;
+    echo &quot; [3] Stay in TTY      &quot;
+    echo &quot;===================================&quot;
+
+    # Read the user&apos;s choice
+    read -P &quot;Select [1-3]: &quot; choice
+
+    switch $choice
+        case 1
+            echo &quot;Start herbstluftwm (X11)...&quot;
+            exec startx (which herbstluftwm)
+
+        case 2
+            echo &quot;Start Sway (Wayland)...&quot;
+            set -gx XDG_CURRENT_DESKTOP sway
+            set -gx XDG_SESSION_DESKTOP sway
+            set -gx XDG_SESSION_TYPE wayland
+            set -gx MOZ_ENABLE_WAYLAND 1
+            set -gx QT_QPA_PLATFORM wayland
+
+            exec sway
+
+        case 3
+            echo &quot;Enter to TTY!&quot;
+
+        case &apos;*&apos;
+            echo &quot;Bad step. Stay in TTY.&quot;
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login x11/wayland wm&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;├── [1] herbstluftwm (X11)   
+├── [2] Sway (Wayland)   
+└── [3] Stay in TTY   
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/hlwm_turbo&quot;&gt;HLWM Turbo&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Linux</category></item><item><title>Bspwm Paper</title><link>https://pinuq.vercel.app/blog/bspwm-paper/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/bspwm-paper/</guid><description>Bspwm dotfiles for the Arch Linux. Used awesome Zorin Light theme and Gruvbox icons. Awesome theme in light style.</description><pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./1.webp&apos;;
+import image2 from &apos;./2.webp&apos;;&lt;/p&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;bspwm-paper&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;bspwm-paper&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h4&gt;Main&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Window Manager: bspwm&lt;/li&gt;
+&lt;li&gt;Hotkeys daemon: sxhkd&lt;/li&gt;
+&lt;li&gt;Status bar: polybar&lt;/li&gt;
+&lt;li&gt;Terminal: alacritty&lt;/li&gt;
+&lt;li&gt;Launcher: rofi&lt;/li&gt;
+&lt;li&gt;Wallpaper: feh&lt;/li&gt;
+&lt;li&gt;Compositor: picom&lt;/li&gt;
+&lt;li&gt;Screenshot: maim&lt;/li&gt;
+&lt;li&gt;Viewer: imv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Fonts&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Symbols Nerd Font&lt;/strong&gt; - icons, interface, development.&lt;br /&gt;
+&lt;strong&gt;JetBrains Mono&lt;/strong&gt; - system font and interface.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear Sans 10&lt;/strong&gt; - System Font&lt;br /&gt;
+&lt;strong&gt;Zorin Light&lt;/strong&gt; - Theme&lt;br /&gt;
+&lt;strong&gt;Gruvbox&lt;/strong&gt; - Icons&lt;/p&gt;
+&lt;h3&gt;🧼 Installation&lt;/h3&gt;
+&lt;h4&gt;1. Boot to the Arch iso&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;archinstall
+
+on the step - profile - select &amp;gt; desktop &amp;gt; bspwm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2. After installing - Reboot and update system&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+
+sudo pacman -S \
+    xorg-server \
+    xorg-xinit \
+    xorg-xrandr \
+    xorg-xset \
+    xorg-xsetroot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;3. Installing BSPWM&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+bspwm \
+sxhkd \
+   alacritty \
+   polybar \
+   rofi \
+   picom \
+   feh \
+   maim \
+   slop \
+   xclip \
+   dunst \
+   i3lock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+Give execution rights to configuration scripts&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;chmod +x ~/.config/bspwm/bspwmrc
+chmod +x ~/.config/polybar/launch.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;4. Installing Pkgs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+
+alacritty \
+   foot \
+   micro \
+   mousepad \
+   firefox
+
+thunar \
+   thunar-archive-plugin \
+   thunar-volman
+
+fastfetch \
+   mc \
+   xarchiver \
+   tumbler \
+   btop
+
+p7zip \
+   unzip \
+   zip \
+   tar \
+   atool
+
+wget \
+   git \
+   curl \
+   gvfs \
+   udisks2 \
+   ntfs-3g
+
+xdg-utils \
+   ripgrep \
+   zoxide \
+   xfce4-screenshooter
+
+imv \
+   celluloid \
+   rhythmbox \
+   imagemagick \
+   ffmpeg \
+   lxappearance
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;5. Installing FISH&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+fish \
+   eza \
+   fzf \
+   fd
+
+chsh -s $(command -v fish)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Home Structure&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;~/
+├── Pictures/
+├── Screen/
+├── icons/
+├── themes/
+├── .local/share/fonts/
+└── .config/
+    ├── bspwm/
+    ├── sxhkd/
+    ├── polybar/
+    ├── rofi/
+    └── picom/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Used Dots, Icons, Themes, Wallpapers&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+&lt;a href=&quot;https://github.com/yojeero/config_linux&quot;&gt;yojeero/config_linux&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Hide/show Polybar&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+use keybinding
+&lt;code&gt;super + b &lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Folder for screenshots&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Create folder &lt;strong&gt;Screen&lt;/strong&gt; for saving screenshots via maim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Login TTY&lt;/h3&gt;
+&lt;h4&gt;.xinitrc&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;exec bspwm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if status is-login
+    if test -z &quot;$DISPLAY&quot; -a (tty) = &quot;/dev/tty1&quot;
+        exec startx
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login Bspwm&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Arch Linux &amp;gt; login &amp;gt; pass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/bspwm_paper&quot;&gt;BSPWM Paper&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Linux</category></item><item><title>Bspwm Cobalt</title><link>https://pinuq.vercel.app/blog/bspwm-cobalt/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/bspwm-cobalt/</guid><description>Bspwm dotfiles for the Arch Linux. Based Cobalt2 theme with Gruvbox theme and Gruvbox icons. Has amazing looks in dark style.</description><pubDate>Wed, 12 Aug 2026 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./1.webp&apos;;
+import image2 from &apos;./2.webp&apos;;&lt;/p&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;bspwm-cobalt&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;bspwm-cobalt&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h4&gt;Main&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Window Manager: bspwm&lt;/li&gt;
+&lt;li&gt;Hotkeys daemon: sxhkd&lt;/li&gt;
+&lt;li&gt;Status bar: polybar&lt;/li&gt;
+&lt;li&gt;Terminal: alacritty&lt;/li&gt;
+&lt;li&gt;Launcher: rofi&lt;/li&gt;
+&lt;li&gt;Wallpaper: feh&lt;/li&gt;
+&lt;li&gt;Compositor: picom&lt;/li&gt;
+&lt;li&gt;Screenshot: maim&lt;/li&gt;
+&lt;li&gt;Viewer: imv&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Fonts&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Symbols Nerd Font&lt;/strong&gt; - icons, interface, development.&lt;br /&gt;
+&lt;strong&gt;JetBrains Mono&lt;/strong&gt; - system font and interface.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Clear Sans 10&lt;/strong&gt; - System Font&lt;br /&gt;
+&lt;strong&gt;Gruvbox Dark&lt;/strong&gt; - Theme&lt;br /&gt;
+&lt;strong&gt;Gruvbox&lt;/strong&gt; - Icons&lt;/p&gt;
+&lt;h3&gt;🧼 Installation&lt;/h3&gt;
+&lt;h4&gt;1. Boot to the Arch iso&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;archinstall
+
+on the step - profile - select &amp;gt; desktop &amp;gt; bspwm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;2. After installing &amp;gt; reboot and update system&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -Syu
+
+sudo pacman -S \
+    xorg-server \
+    xorg-xinit \
+    xorg-xrandr \
+    xorg-xset \
+    xorg-xsetroot
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;3. Installing BSPWM&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+bspwm \
+sxhkd \
+   alacritty \
+   polybar \
+   rofi \
+   picom \
+   feh \
+   maim \
+   slop \
+   xclip \
+   dunst \
+   i3lock
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+Give execution rights to configuration scripts:&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;chmod +x ~/.config/bspwm/bspwmrc
+chmod +x ~/.config/polybar/launch.sh
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;4. Installing Pkgs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+
+alacritty \
+   micro \
+   mousepad \
+   firefox
+
+thunar \
+   thunar-archive-plugin \
+   thunar-volman
+
+fastfetch \
+   mc \
+   xarchiver \
+   tumbler \
+   btop
+
+p7zip \
+   unzip \
+   zip \
+   tar \
+   atool
+
+wget \
+   git \
+   curl \
+   gvfs \
+   udisks2 \
+   ntfs-3g
+
+xdg-utils \
+   ripgrep \
+   zoxide \
+   xfce4-screenshooter
+
+imv \
+   celluloid \
+   rhythmbox \
+   imagemagick \
+   ffmpeg \
+   lxappearance 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;5. Installing FISH&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;sudo pacman -S \
+fish \
+   eza \
+   fzf \
+   fd
+
+chsh -s $(command -v fish)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Home Structure&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;~/
+├── Pictures/
+├── Screen/
+├── icons/
+├── themes/
+├── .local/share/fonts/
+└── .config/
+    ├── bspwm/
+    ├── sxhkd/
+    ├── polybar/
+    ├── rofi/
+    └── picom/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Used Dots, Icons, Themes, Wallpapers&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!NOTE]
+&lt;a href=&quot;https://github.com/yojeero/config_linux&quot;&gt;yojeero/config_linux&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Hide/show Polybar&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+use keybinding
+&lt;code&gt;super + b &lt;/code&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Folder for screenshots&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Create folder &lt;strong&gt;Screen&lt;/strong&gt; for saving screenshots via maim.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;Login TTY&lt;/h3&gt;
+&lt;h4&gt;.xinitrc&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;exec bspwm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;config.fish&lt;/h4&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+at the end &amp;gt; insert&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre&gt;&lt;code&gt;if status is-login
+    if test -z &quot;$DISPLAY&quot; -a (tty) = &quot;/dev/tty1&quot;
+        exec startx
+    end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Login Bspwm&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Arch Linux &amp;gt; login &amp;gt; pass&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/bspwm_cobalt&quot;&gt;BSPWM Cobalt&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Linux</category></item><item><title>Multiboot USB</title><link>https://pinuq.vercel.app/blog/multi-usb/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/multi-usb/</guid><description>Support for Windows, Linux, WinPE, also for UEFI and MBR.</description><pubDate>Tue, 25 Feb 2025 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import image1 from &apos;./yellow.webp&apos;;
+import image2 from &apos;./art.webp&apos;;
+import image3 from &apos;./moda.webp&apos;;
+import image4 from &apos;./city.webp&apos;;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Support for Windows, Linux, WinPE.&lt;br /&gt;
+Support for UEFI and Legacy BIOS (MBR).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&amp;lt;div class=&quot;grid grid-cols-2 gap-4&quot;&amp;gt;
+&amp;lt;Image src={image1} alt=&quot;usb&quot; /&amp;gt;
+&amp;lt;Image src={image2} alt=&quot;usb&quot; /&amp;gt;
+&amp;lt;Image src={image3} alt=&quot;usb&quot; /&amp;gt;
+&amp;lt;Image src={image4} alt=&quot;usb&quot; /&amp;gt;
+&amp;lt;/div&amp;gt;&lt;/p&gt;
+&lt;h3&gt;Quick start&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;graph LR;
+Format[Format] --&amp;gt; Boot[MBR/PBR]
+Boot --&amp;gt; Files[USB-Files]
+Files --&amp;gt; ISO[ISO]
+ISO --&amp;gt; Menu[menu.lst]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Contents&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#quick-start&quot;&gt;Quick Start&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#features&quot;&gt;Features&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#supported-images&quot;&gt;Supported Images&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#how-to-make-the-usb-flash-drive-bootable&quot;&gt;How to Make the USB Flash Drive Bootable&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#preparing-a-windows-iso-image&quot;&gt;Preparing a Windows ISO Image&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#wincontig-analysis-and-defragmentation&quot;&gt;WinContig — Analysis and Defragmentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#themes&quot;&gt;Themes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Features&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;BIOS/UEFI&lt;/li&gt;
+&lt;li&gt;Windows ISO&lt;/li&gt;
+&lt;li&gt;Linux ISO&lt;/li&gt;
+&lt;li&gt;WinPE/LiveCD&lt;/li&gt;
+&lt;li&gt;Themes&lt;/li&gt;
+&lt;li&gt;Multiple ISOs on a single USB drive&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Supported ISOs&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows 10 / 11&lt;/li&gt;
+&lt;li&gt;Macrium Reflect&lt;/li&gt;
+&lt;li&gt;WinPE / LiveCD environments&lt;/li&gt;
+&lt;li&gt;Arch Linux&lt;/li&gt;
+&lt;li&gt;Kali Linux&lt;/li&gt;
+&lt;li&gt;CachyOS&lt;/li&gt;
+&lt;li&gt;Most modern Linux distributions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;How to make the USB flash drive bootable&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Installing the bootloader&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+The USB flash drive must be formatted as one partition.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Select a File System&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;FAT32/NTFS&lt;/strong&gt;→ Choose the file system that best suits your needs.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+FAT32 → does not support files larger than 4 GB&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Activate the Partition&lt;/h4&gt;
+&lt;p&gt;Open Bootice and select your USB drive.&lt;/p&gt;
+&lt;h4&gt;Formatting a USB flash drive&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;File System
+├─ FAT32/NTFS
+└─ Start LBA → 2048
+&lt;/code&gt;&lt;/pre&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;File system&lt;/th&gt;
+&lt;th&gt;Features&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;FAT32&lt;/td&gt;
+&lt;td&gt;Compatible, but files up to 4 GB&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;NTFS&lt;/td&gt;
+&lt;td&gt;Supports large ISO files&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;pre&gt;&lt;code&gt;Parts Manage
+├─ Re-Partitioning
+├─ USB-HDD mode (Single Partition)
+└─ Activate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Install MBR&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;Bootice
+└─ Process MBR
+    └─Windows NT 5.x/6.x
+        └─ Install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Install PBR&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;Bootice
+└─ Process PBR
+   └─ Grub4Dos
+      └─ Install
+         └─ Version 0.4.6a
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Creating a Multiboot USB Drive&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Format the USB flash drive using → &lt;strong&gt;Bootice → Parts Manage → Repartitioning&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Using BOOTICE, perform Re-Partitioning as described in the section above. → &lt;strong&gt;How ​​to make the USB flash drive bootable&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Copy the contents of the folder → &lt;strong&gt;USB-Files&lt;/strong&gt; to the USB flash drive.&lt;/li&gt;
+&lt;li&gt;Integrate the driver → FiraDisk &lt;strong&gt;into&lt;/strong&gt; the Windows ISO image.&lt;/li&gt;
+&lt;li&gt;Copy the ISO image to the folder → &lt;strong&gt;ISO&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Edit the file → &lt;strong&gt;menu.lst&lt;/strong&gt; so that the ISO paths and names match.&lt;/li&gt;
+&lt;li&gt;Copy the Linux distributions to the &lt;strong&gt;TUX&lt;/strong&gt; folder&lt;/li&gt;
+&lt;li&gt;Copy WinPE / LiveCD images to the &lt;strong&gt;PE&lt;/strong&gt; folder&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+If desired, all ISOs can be stored in one directory.&lt;br /&gt;
+Folders &quot;ISO, TUX, PE, Apps&quot; are created solely for convenience.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4&gt;Structure of a multiboot flash drive&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;Multiboot USB root/
+│
+├──GFX/
+│ ├── mac.gz
+│ └── unifont.hex.gz
+│
+├── Apps/
+│
+├── ISO/
+├── PE/
+├── TUX/
+│
+├── AutoUnattend.xml
+├── GRLDR
+├── liveusbl
+├── winpeshl.ini
+│
+└── menu.lst
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+A multiboot flash drive created using this scheme works in both BIOS Legacy and UEFI.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!WARNING]
+Some ISO images may require disabling Secure Boot in the BIOS/UEFI to boot.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Preparing a Windows ISO image&lt;/h2&gt;
+&lt;p&gt;To run Windows installation from a USB flash drive, you need to integrate the &lt;strong&gt;FiraDisk driver&lt;/strong&gt; into the ISO image.&lt;br /&gt;
+For this purpose → &lt;strong&gt;FiraDisk_integrator&lt;/strong&gt; is used.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Create a working folder
+├─ Use Latin characters in the folder name
+├─ No spaces
+├─ Maximum 8 characters
+├─ Copy the Windows ISO into the folder
+├─ Place the FiraDisk_integrator script in the same folder
+└─ Run the script as administrator
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+You can copy several Windows ISO, of different editions and 32-bit and 64-bit versions.&lt;br /&gt;
+The script processes all ISO images located in the same folder sequentially and, based on them, creates its own ISO images with the FiraDisk driver.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3&gt;WinContig — Analysis &amp;amp; Defragmentation&lt;/h3&gt;
+&lt;p&gt;When working with multiboot flash drives, ISO files should not be fragmented.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+If the ISO is fragmented, errors or problems may occur while loading the ISO into memory.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;ISO check&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;WinContig → Analyze
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!IMPORTANT]
+If the program shows the need for optimization, perform defragmentation.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Defragmentation&lt;/strong&gt;→ launch WinContig&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;List of drives
+├─ Select flash drive
+├─ Properties
+├─ Service
+├─ Check
+└─ Optimize
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Themes&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Themes&lt;/strong&gt; → located in the &lt;code&gt;make_skins/skins&lt;/code&gt; folder&lt;/p&gt;
+&lt;p&gt;How to Install a New Theme&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Select the skin file → for example → mac.gz   
+├─ Copy it to the folder → GFX
+├─ Edit → menu.lst 
+├─ Find the line → gfxmenu /GFX/sony.gz
+└─ Replace → sony.gz with mac.gz
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;GitHub&lt;/h3&gt;
+&lt;p&gt;Source files, configs, and themes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yojeero/usb_multiboot&quot;&gt;Multiboot USB&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/yojeero/usb_multiboot/blob/main/README_Ru.md&quot;&gt;Multiboot USB на русском&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</content:encoded><category>Tech</category></item><item><title>VSCode themes</title><link>https://pinuq.vercel.app/blog/vscode/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/vscode/</guid><description>VSCode light &amp; dark themes. Cream is the light theme and Moka in the dark colors for comfort using at the every day.</description><pubDate>Wed, 06 Nov 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import BlogImage from &apos;../../../components/BlogImage.astro&apos;;
+import image1 from &apos;./cream.webp&apos;;
+import image2 from &apos;./moka.webp&apos;;&lt;/p&gt;
+&lt;h3&gt;Cream - the light theme.&lt;/h3&gt;
+&lt;p&gt;&amp;lt;BlogImage
+src={image1}
+alt=&quot;sublime&quot;
+zoom={250}
+position=&quot;top-left&quot;
+/&amp;gt;&lt;/p&gt;
+&lt;p&gt;Go &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Yojeero.cream&quot;&gt;Marketplace&lt;/a&gt; and click &lt;code&gt;install&lt;/code&gt; button.&lt;/p&gt;
+&lt;p&gt;Open VSCode extensions panel and Search for &lt;code&gt;Cream&lt;/code&gt; theme.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/cream_vscode&quot;&gt;Cream VSCode&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Moka - the dark theme.&lt;/h3&gt;
+&lt;p&gt;&amp;lt;BlogImage
+src={image2}
+alt=&quot;sublime&quot;
+zoom={250}
+position=&quot;top-left&quot;
+/&amp;gt;&lt;/p&gt;
+&lt;p&gt;Go &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Yojeero.moka&quot;&gt;Marketplace&lt;/a&gt; and click &lt;code&gt;install&lt;/code&gt; button.&lt;/p&gt;
+&lt;p&gt;Open VSCode extensions panel and Search for &lt;code&gt;Moka&lt;/code&gt; theme.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/moka_vscode&quot;&gt;Moka VSCode&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Editor</category></item><item><title>Swenska Notepad4</title><link>https://pinuq.vercel.app/blog/notepad4/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/notepad4/</guid><description>Notepad4 themes for Windows. Notepad4 is a light-weight text editor  with syntax highlighting, code folding, auto-completion and rewritten in modern C++.</description><pubDate>Fri, 12 Jul 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;&lt;a href=&quot;https://github.com/zufuliu/notepad4&quot;&gt;Notepad4&lt;/a&gt; - is a light-weight text editor for Windows with syntax highlighting, code folding, auto-completion and rewritten in modern C++.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+&lt;code&gt;Swenska Light&lt;/code&gt; - light theme.&lt;br /&gt;
+&lt;code&gt;Swenska Dark&lt;/code&gt; - dark theme.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;For use &lt;code&gt;Swenska Light&lt;/code&gt; in Notepad4:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;install fonts from &lt;code&gt;fonts&lt;/code&gt; folder.&lt;/li&gt;
+&lt;li&gt;run Notepad4.exe&lt;/li&gt;
+&lt;li&gt;select in menu - Scheme - Style Theme - Default.&lt;/li&gt;
+&lt;li&gt;select in menu - Scheme - customize Schemes.&lt;/li&gt;
+&lt;li&gt;import Swenska Light.ini from &quot;themes&quot; folder.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;For use &lt;code&gt;Swenska Dark&lt;/code&gt; in Notepad4:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;install fonts from &lt;code&gt;fonts&lt;/code&gt; folder.&lt;/li&gt;
+&lt;li&gt;run Notepad4.exe&lt;/li&gt;
+&lt;li&gt;select in menu - Scheme - Style Theme - Dark.&lt;/li&gt;
+&lt;li&gt;select in menu - Scheme - customize Schemes.&lt;/li&gt;
+&lt;li&gt;import Swenska Dark.ini from &quot;themes&quot; folder.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;[!TIP]
+Or just download folder Notepad4 with pre-installed themes and use it.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/swenska_notepad4&quot;&gt;Swenska Notepad4&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Editor</category></item><item><title>Sublime themes</title><link>https://pinuq.vercel.app/blog/sublime/</link><guid isPermaLink="true">https://pinuq.vercel.app/blog/sublime/</guid><description>Sublime Text color schemes. Alpen in the light color scheme and Lotus in the dark style for every day use.</description><pubDate>Sun, 23 Jun 2024 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;import { Image } from &apos;astro:assets&apos;;
+import BlogImage from &apos;../../../components/BlogImage.astro&apos;;
+import image1 from &apos;./cream.webp&apos;;
+import image2 from &apos;./moka.webp&apos;;&lt;/p&gt;
+&lt;h3&gt;Alpen - the light color scheme.&lt;/h3&gt;
+&lt;p&gt;&amp;lt;BlogImage
+src={image1}
+alt=&quot;sublime&quot;
+zoom={250}
+position=&quot;top-left&quot;
+/&amp;gt;&lt;/p&gt;
+&lt;p&gt;Install using Package Control&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enter &lt;code&gt;Package Control: Install Package&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Search for &lt;code&gt;Alpen Color Scheme&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Activating the Alpen Color Scheme&lt;/li&gt;
+&lt;li&gt;Preferences &amp;gt; Color Scheme &amp;gt; select &amp;gt; &lt;code&gt;Alpen&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/alpen_sublime&quot;&gt;Alpen&lt;/a&gt; download from the GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr /&gt;
+&lt;h3&gt;Lotus - the dark color scheme.&lt;/h3&gt;
+&lt;p&gt;&amp;lt;BlogImage
+src={image2}
+alt=&quot;sublime&quot;
+zoom={250}
+position=&quot;top-left&quot;
+/&amp;gt;&lt;/p&gt;
+&lt;p&gt;Install using Package Control&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enter &lt;code&gt;Package Control: Install Package&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Search for &lt;code&gt;Lotus Color Scheme&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Activating the Lotus Color Scheme&lt;/li&gt;
+&lt;li&gt;Preferences &amp;gt; Color Scheme &amp;gt; select &amp;gt; &lt;code&gt;Lotus&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/yojeero/lotus_sublime&quot;&gt;Lotus&lt;/a&gt; download from the  GitHub.&lt;/p&gt;
+&lt;/blockquote&gt;
+</content:encoded><category>Editor</category></item></channel></rss>
