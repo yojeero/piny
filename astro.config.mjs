@@ -8,6 +8,7 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import icon from "astro-icon";
+import tina from "@tinacms/astro/integration";
 
 const blogDir = new URL("./src/content/blog/", import.meta.url);
 
@@ -116,6 +117,7 @@ export default defineConfig({
   ],
 
   integrations: [
+    tina(),
     mdx(),
     sitemap({
       serialize(item) {

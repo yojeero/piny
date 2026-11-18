@@ -36,6 +36,9 @@ export default defineConfig({
         name: "post",
         label: "Posts",
         path: "src/content/blog",
+        ui: {
+          router: ({ document }) => `/tinacms-demo?slug=${document._sys.filename}`,
+        },
         fields: [
           {
             type: "string",

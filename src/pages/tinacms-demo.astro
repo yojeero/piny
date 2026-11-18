@@ -10,7 +10,7 @@ import Starfield from "../components/tina/Starfield.astro";
 import { getPost } from "../lib/tina/data";
 import { islands } from "../lib/tina/islands";
 
-const slug = "hello-world";
+const slug = Astro.url.searchParams.get("slug") ?? "hello-world";
 const post = await getPost(slug);
 const data = post.data?.post;
 if (!data) return new Response("Not Found", { status: 404 });
