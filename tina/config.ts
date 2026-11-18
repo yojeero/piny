@@ -8,13 +8,11 @@ const branch =
   "main";
 
 export default defineConfig({
-  // Build locally (no Tina Cloud) unless credentials are provided
-  isLocal: !process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
   branch,
   // Get this from tina.io
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+  clientId: 'ca6a9f8a-9b7a-4fca-8a06-31129f1e64e5',
   // Get this from tina.io
-  token: process.env.TINA_TOKEN,
+  token: '4124a9c7f2c4df3db7f9bc15fced92fd256ca04a',
   build: {
     outputFolder: "admin",
     publicFolder: "public",
