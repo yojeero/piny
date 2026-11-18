@@ -35,7 +35,7 @@ export default defineConfig({
       {
         name: 'post',
         label: 'Posts',
-        path: 'content/posts',
+        path: 'src/content/blog',
         fields: [
           {
             type: 'string',
@@ -73,11 +73,7 @@ export default defineConfig({
               { type: 'string', name: 'href', label: 'Link' },
             ],
           },
-        ],
-        ui: {
-          // Opens the /tinacms-demo page for visual editing. Change or remove to fit your site.
-          router: () => '/tinacms-demo',
-        },
+        ],       
       },
     ],
   },

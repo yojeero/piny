@@ -7,13 +7,13 @@ const siteUrl = (import.meta.env.SITE ?? "https://pintin.pages.dev").replace(
 );
 
 const siteConfig: SiteConfig = {
-  title: "PINUQ",
+  title: "PINTIN",
   titleSeparator: "",
   url: siteUrl,
   description: "Tech Blog",
   logo: {
     src: "",
-    alt: "PINUQ",
+    alt: "PINTIN",
   },
   author: "Yojee",
   image: {

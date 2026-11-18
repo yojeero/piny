@@ -1,19 +1,20 @@
 <img src="preview/d1.webp" width="100%">
 
-<img src="https://img.shields.io/badge/Pinuq-7678ed?style=for-the-badge" width="40%" alt="Pinuq">   
+<img src="https://img.shields.io/badge/Pintin-7678ed?style=for-the-badge" width="40%" alt="Pintin">   
 
 Features 🧼   
 
 - Blog in Tech & Lifestyle   
 - 100% Lighthouse Performance   
-- Cloud & Vercel Hosting Ready   
+- Cloud & Cloudflare Hosting Ready   
+- TinaCMS visual editing
 - Responsive Design   
 - Astro based   
 - Clean UI   
 
 #### Tech Stack
 ```
-Astro | Bun | Vite | Biome | Tailwind CSS | TypeScript
+Astro | Bun | Vite | Biome | Tailwind CSS | TypeScript | TinaCMS
 ```   
 
 ## Commands
