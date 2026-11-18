@@ -31,7 +31,7 @@ All commands are run from the root of the project:
 | `bun astro sync`  | Clear Astro fonts cache after changing fonts    |
 
 > [!IMPORTANT]
-> **https://piny.vercel.app** — now using in the config files on production.   
+> **https://piny-eta.vercel.app/** — now using in the config files on production.   
 
 When your project gets a different domain name (for example, new.vercel.app)    
 or you connect your own domain, update all 4 locations;    
