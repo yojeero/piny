@@ -1,0 +1,146 @@
+---
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+import Prose from "@/components/Prose.astro";
+import siteConfig, { team } from "@/data/site-config";
+import type { BlogPost } from "@/data/types";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { slugify } from "@/utils/common-utils";
+import { sortItemsByDateDesc } from "@/utils/data-utils";
+import {
+  createBlogPostingSchema,
+  createPersonSchema,
+} from "@/utils/schema-utils";
+import { defaultAvatar, resolveAvatar } from "@/utils/team-utils";
+
+export async function getStaticPaths() {
+  const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+
+  return posts.map((post, index) => ({
+    params: { id: post.id },
+    props: {
+      post,
+      newerPost: posts[index - 1] ?? null,
+      olderPost: posts[index + 1] ?? null,
+    },
+  }));
+}
+
+type Props = {
+  post: BlogPost;
+  newerPost: BlogPost | null;
+  olderPost: BlogPost | null;
+};
+
+const { post, newerPost, olderPost } = Astro.props;
+
+const {
+  title,
+  publishDate,
+  updatedDate,
+  excerpt,
+  tags = [],
+  seo,
+  author,
+} = post.data;
+
+const authorName = author || siteConfig.author;
+const matchedMember = team.find(
+  (member) => member.author === authorName || member.name === authorName,
+);
+const authorAvatar = resolveAvatar(matchedMember?.avatar) ?? defaultAvatar;
+
+const ogImage = {
+  src: new URL(`og/${post.id}.png`, Astro.site).toString(),
+  alt: title,
+};
+
+const primaryTag = tags[0];
+
+const { Content } = await render(post);
+
+const postUrl = new URL(`/blog/${post.id}`, Astro.site).toString();
+
+const authorSchema = createPersonSchema();
+const blogPostingSchema = createBlogPostingSchema(post, postUrl, authorSchema);
+---
+
+<BaseLayout
+  title={seo?.title ?? title}
+  description={seo?.description ?? excerpt}
+  image={seo?.image ?? ogImage}
+  pageType="article"
+  lastModified={updatedDate ?? publishDate}
+  publishedTime={publishDate}
+  modifiedTime={updatedDate ?? publishDate}
+  tags={tags}
+  customSchemas={[blogPostingSchema]}
+>
+  <div class="max-w-4xl mx-auto w-full py-12">
+    <h2
+      class="font-medium leading-8 tracking-wide text-3xl lg:text-4xl text-center dark:text-mist"
+    >
+      {title}
+    </h2>
+  </div>
+
+  <div class="flex w-full max-w-3xl mx-auto items-center my-4">
+    <div class="w-full flex items-center gap-4">
+      {authorAvatar && (
+  <Image
+    src={authorAvatar}
+    alt={authorName}
+    class="h-12 w-12 rounded-full object-cover object-top"
+  />
+)}
+      <p class="text-xs tracking-tighter">
+        <FormattedDate date={publishDate} format="short" />
+      </p>
+    </div>
+
+    <div
+      class="flex w-fit px-4 text-[10px] uppercase items-end tracking-widest text-foreground"
+    >
+      {primaryTag && <a href={`/tags/${slugify(primaryTag)}/`}>{primaryTag}</a>}
+    </div>
+  </div>
+
+  <div class="mt-10">
+    <article class="min-w-0 w-full max-w-3xl mx-auto">
+      <div id="content">
+        <Prose>
+          <Content />
+        </Prose>
+      </div>
+    </article>
+  </div>
+
+  {(olderPost || newerPost) && (
+  <nav
+    aria-label="Post navigation"
+    class="w-full max-w-2xl mx-auto py-8 gap-2 flex justify-center"
+  >
+    {olderPost ? (
+      <a
+        href={`/blog/${olderPost.id}/`}
+        class="flex flex-col w-fit text-right inline-flex border border-line p-4 hover:text-mist tracking-wide rounded-md shadow-xs"
+      >
+        <span class="block text-xs mb-2">&larr; Prev</span>
+        <span class="block text-sm capitalize">{olderPost.data.title}</span>
+      </a>
+    ) : (
+      <span class="hidden sm:block" aria-hidden="true" />
+    )}
+    {newerPost && (
+      <a
+        href={`/blog/${newerPost.id}/`}
+        class="flex flex-col w-fit text-left inline-flex border border-line p-4 hover:text-mist tracking-wide rounded-md shadow-xs"
+      >
+        <span class="block text-xs mb-2">Next &rarr;</span>
+        <span class="block text-sm capitalize">{newerPost.data.title}</span>
+      </a>
+    )}
+  </nav>
+)}
+</BaseLayout>

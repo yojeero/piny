@@ -1,21 +1,19 @@
 <img src="preview/d1.webp" width="100%">
 
-<img src="https://img.shields.io/badge/Pintin-7678ed?style=for-the-badge" width="40%" alt="Pintin">   
+<img src="https://img.shields.io/badge/Piny-7678ed?style=for-the-badge" width="40%" alt="Piny">   
 
 Features 🧼   
 
 - Blog in Tech & Lifestyle   
 - 100% Lighthouse Performance   
 - Cloud & Vercel Hosting Ready   
-- Cloudflare Hosting Ready   
-- TinaCMS visual editing   
 - Responsive Design   
 - Astro based   
 - Clean UI   
 
 #### Tech Stack
 ```
-Astro | Bun | Vite | Biome | Tailwind CSS | TypeScript | TinaCMS
+Astro | Bun | Vite | Biome | Tailwind CSS | TypeScript
 ```   
 
 ## Commands
@@ -33,7 +31,7 @@ All commands are run from the root of the project:
 | `bun astro sync`  | Clear Astro fonts cache after changing fonts    |
 
 > [!IMPORTANT]
-> **https://pintin.pages.dev** — now using in the config files on production.   
+> **https://piny.vercel.app** — now using in the config files on production.   
 
 When your project gets a different domain name (for example, new.vercel.app)    
 or you connect your own domain, update all 4 locations;    

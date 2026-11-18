@@ -1,16 +1,39 @@
-/**
- * Content is sourced from TinaCMS (see `src/lib/data.ts`), not Astro's
- * content layer, so these collections are unused at runtime. We only
- * declare `config` to stop Astro auto-generating it as a Markdown
- * collection: `src/content/config` holds JSON (Tina's global config), so
- * the default Markdown glob finds nothing and warns. Pointing it at JSON
- * silences that. `blog` and `page` keep their Markdown auto-generation.
- */
-import { defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
-const config = defineCollection({
-	loader: glob({ pattern: '**/*.json', base: 'src/content/config' }),
+const seoSchema = z.object({
+  title: z.string().min(1).max(120).optional(),
+  description: z.string().min(15).max(160).optional(),
+  image: z
+    .object({
+      src: z.string(),
+      alt: z.string().optional(),
+    })
+    .optional(),
+  pageType: z.enum(["website", "article"]).default("website"),
 });
 
-export const collections = { config };
+const blog = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
+  schema: () =>
+    z.object({
+      title: z.string(),
+      excerpt: z.string().optional(),
+      publishDate: z.coerce.date(),
+      updatedDate: z.coerce.date().optional(),
+      tags: z.array(z.string()).default([]),
+      seo: seoSchema.optional(),
+      author: z.string().optional(),
+    }),
+});
+
+const pages = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/pages" }),
+  schema: z.object({
+    title: z.string(),
+    seo: seoSchema.optional(),
+  }),
+});
+
+export const collections = { blog, pages };

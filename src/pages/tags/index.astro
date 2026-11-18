@@ -1,0 +1,65 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import {
+  getAllTags,
+  getPostsByTag,
+  sortItemsByDateDesc,
+} from "@/utils/data-utils";
+
+const posts = (await getCollection("blog")).sort(sortItemsByDateDesc);
+const tags = getAllTags(posts);
+
+const tagsWithCount = tags
+  .map((tag) => ({
+    ...tag,
+    count: getPostsByTag(posts, tag.id).length,
+  }))
+  .sort((a, b) => b.count - a.count);
+---
+
+<BaseLayout
+  title="Tags"
+  description="Click on any tag to discover related articles and insights."
+>
+  <section class="w-full max-w-5xl mx-auto py-[clamp(4rem,6vw,8rem)]">
+    <h1 class="font-bold text-4xl sm:text-[2.5rem]">Tags</h1>
+    <p class="mt-5 mb-6 text-base leading-relaxed sm:text-lg">
+      Click on any tag to discover related articles and insights.
+    </p>
+    <div class="grid gap-6">
+      <div>
+        <h2 class="font-serif text-2xl font-medium sm:text-3xl">
+          All Tags ({tagsWithCount.length})
+        </h2>
+        <div class="mt-4 flex flex-wrap gap-2">
+          {tagsWithCount.map((tag) => (
+  <a
+    href={`/tags/${tag.id}/`}
+    class="flex w-fit uppercase text-xs font-mono tracking-widest px-2 mt-4"
+  >
+    {tag.name}
+  </a>
+))}
+        </div>
+      </div>
+      {tagsWithCount.length > 0 && (
+  <div>
+    <h2 class="font-mono text-2xl sm:text-3xl">Popular Tags</h2>
+    <div class="mt-4 grid gap-3 sm:grid-cols-2 md:grid-cols-2">
+      {tagsWithCount.slice(0, 9).map((tag) => (
+        <a href={`/tags/${tag.id}/`} class="font-medium">
+          <div class="flex items-center justify-between p-3">
+            {tag.name}
+            <span class="flex w-fit uppercase text-xs font-mono tracking-widest px-2">
+              {tag.count} <span class="sr-only">posts</span>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+)}
+    </div>
+  </section>
+</BaseLayout>
