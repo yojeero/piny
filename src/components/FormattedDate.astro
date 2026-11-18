@@ -1,27 +1,17 @@
 ---
 interface Props {
-  date: Date;
-  format?: "long" | "short";
+	date: Date;
 }
 
-const { date, format = "long" } = Astro.props;
-
-const options: Intl.DateTimeFormatOptions =
-  format === "short"
-    ? {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-        timeZone: "UTC",
-      }
-    : {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-        timeZone: "UTC",
-      };
+const { date } = Astro.props;
 ---
 
 <time datetime={date.toISOString()}>
-  {date.toLocaleDateString("en-US", options)}
+	{
+		date.toLocaleDateString('en-us', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric',
+		})
+	}
 </time>
