@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://pinuq.vercel.app/sitemap-index.xml

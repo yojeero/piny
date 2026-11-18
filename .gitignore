@@ -35,3 +35,6 @@ dist-ssr
 *.sw?
 
 blog_new
+node_modules
+.env
+tina/__generated__
