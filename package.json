@@ -1,5 +1,5 @@
 {
-  "name": "pinuq",
+  "name": "pintin",
   "type": "module",
   "version": "1.0.1",
   "engines": {
@@ -21,7 +21,6 @@
     "@astrojs/node": "^11.1.13",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",
-    "@astrojs/vercel": "^11.0.11",
     "@tailwindcss/vite": "^4.3.3",
     "@tinacms/astro": "^0.8.0",
     "astro": "^7.3.2",
