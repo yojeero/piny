@@ -3,6 +3,7 @@
 
 import { readFileSync } from "node:fs";
 import mdx from "@astrojs/mdx";
+import node from "@astrojs/node";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
@@ -39,6 +40,7 @@ function getBlogLastmod(url) {
 export default defineConfig({
   site: "https://pintin.pages.dev",
   output: "static",
+  adapter: node({ mode: "standalone" }),
 
   image: {
     formats: ["webp"],
