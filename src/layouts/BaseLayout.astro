@@ -22,7 +22,7 @@ const {
   ...head
 } = Astro.props;
 
-const siteUrl = Astro.site?.toString() ?? "https://pinuq.vercel.app";
+const siteUrl = Astro.site?.toString() ?? "https://pintin.pages.dev";
 const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
 
 const schemas: WithContext<Thing>[] = [

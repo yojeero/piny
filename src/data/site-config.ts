@@ -1,7 +1,7 @@
 import teamData from "@/data/team.json";
 import type { SiteConfig, TeamMember } from "@/data/types";
 
-const siteUrl = (import.meta.env.SITE ?? "https://pinuq.vercel.app").replace(
+const siteUrl = (import.meta.env.SITE ?? "https://pintin.pages.dev").replace(
   /\/$/,
   "",
 );

@@ -37,7 +37,7 @@ function getBlogLastmod(url) {
 }
 
 export default defineConfig({
-  site: "https://pinuq.vercel.app",
+  site: "https://pintin.pages.dev",
   output: "static",
 
   image: {
